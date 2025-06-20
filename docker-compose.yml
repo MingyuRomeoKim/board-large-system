@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mingyu-board-mysql
+    ports:
+      - "23306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=mingyu
