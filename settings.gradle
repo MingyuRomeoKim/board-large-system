@@ -1,1 +1,5 @@
 rootProject.name = 'board-large-system'
+
+include 'common'
+include 'service'
+include 'service:article'
