@@ -1,2 +1,17 @@
 server:
   port: 9000
+
+spring:
+  application:
+    name: mingyu-board-article-service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:23306/article
+    username: root
+    password: mingyu
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
