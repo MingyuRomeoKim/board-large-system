@@ -3,9 +3,11 @@ package mingyu.board.article.service;
 import lombok.RequiredArgsConstructor;
 import mingyu.board.article.dto.request.ArticleCreateRequestDto;
 import mingyu.board.article.dto.request.ArticleUpdateRequestDto;
+import mingyu.board.article.dto.response.ArticlePageResponseDto;
 import mingyu.board.article.dto.response.ArticleResponseDto;
 import mingyu.board.article.entity.Article;
 import mingyu.board.article.repository.ArticleRepository;
+import mingyu.board.article.util.PageLimitCalculator;
 import mingyu.board.common.snowflake.Snowflake;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,5 +42,17 @@ public class ArticleService {
     @Transactional
     public void delete(Long articleId) {
         articleRepository.deleteById(articleId);
+    }
+
+    public ArticlePageResponseDto readAll(Long boardId, Long page, Long pageSize) {
+        return ArticlePageResponseDto.from(
+                articleRepository.findAll(boardId,(page -1) * pageSize, pageSize).stream()
+                        .map(ArticleResponseDto::from)
+                        .toList(),
+                articleRepository.count(
+                        boardId,
+                        PageLimitCalculator.calculatePageLimit(page,pageSize,10L)
+                )
+        );
     }
 }

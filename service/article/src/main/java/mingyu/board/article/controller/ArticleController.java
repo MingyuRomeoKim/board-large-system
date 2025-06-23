@@ -3,6 +3,7 @@ package mingyu.board.article.controller;
 import lombok.RequiredArgsConstructor;
 import mingyu.board.article.dto.request.ArticleCreateRequestDto;
 import mingyu.board.article.dto.request.ArticleUpdateRequestDto;
+import mingyu.board.article.dto.response.ArticlePageResponseDto;
 import mingyu.board.article.dto.response.ArticleResponseDto;
 import mingyu.board.article.service.ArticleService;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,16 @@ public class ArticleController {
     @GetMapping("/{articleId}")
     public ArticleResponseDto read(@PathVariable Long articleId) {
         return articleService.read(articleId);
+    }
+
+    @GetMapping
+    public ArticlePageResponseDto readAll(
+            @RequestParam("boardId") Long boardId,
+            @RequestParam("page") Long page,
+            @RequestParam("pageSize") Long pageSize
+    )
+    {
+        return articleService.readAll(boardId, page, pageSize);
     }
 
     @PostMapping

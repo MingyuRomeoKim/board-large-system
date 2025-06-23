@@ -2,6 +2,7 @@ package mingyu.board.article.api;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import mingyu.board.article.dto.response.ArticlePageResponseDto;
 import mingyu.board.article.dto.response.ArticleResponseDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.client.RestClient;
@@ -58,6 +59,20 @@ public class ArticleApiTest {
                 .uri("/api/v1/articles/{articleId}",194329359756513280L)
                 .retrieve()
                 .body(Void.class);
+    }
+
+    @Test
+    void readAllTest() {
+        ArticlePageResponseDto response = restClient.get()
+                .uri("/api/v1/articles?boardId=1&page=50000&pageSize=30")
+                .retrieve()
+                .body(ArticlePageResponseDto.class);
+
+        System.out.println("response.getArticleCount() = " + response.getArticleCount());
+
+        for (ArticleResponseDto articleResponseDto : response.getArticles()) {
+            System.out.println("articleResponseDto = " + articleResponseDto);
+        }
     }
 
     @Getter
